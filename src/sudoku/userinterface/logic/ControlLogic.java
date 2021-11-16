@@ -1,14 +1,23 @@
-package userinterface;
+package sudoku.userinterface.logic;
+
+
+import sudoku.constants.GameState;
+import sudoku.constants.Messages;
+import sudoku.computationlogic.GameLogic;
+import sudoku.problemdomain.IStorage;
+import sudoku.problemdomain.SudokuGame;
+import sudoku.userinterface.IUserInterfaceContract;
 
 import java.io.IOException;
 
-import constans.GameState;
-import constans.Messages;
-import problemDomain.IStorage;
-import problemDomain.SudokuGame;
+/**
+ * Since this is a single screen application, just one container (class) for the logic of the user interface is
+ * necessary. Break these things up when building applications with more screens/features. Don't build God Classes!
+ */
 
 public class ControlLogic implements IUserInterfaceContract.EventListener {
-	private IStorage storage;
+
+    private IStorage storage;
     //Remember, this could be the real UserInterfaceImpl, or it could be a test class
     //which implements the same interface!
     private IUserInterfaceContract.View view;
@@ -33,7 +42,7 @@ public class ControlLogic implements IUserInterfaceContract.EventListener {
     public void onSudokuInput(int x, int y, int input) {
         try {
             SudokuGame gameData = storage.getGameData();
-            int[][] newGridState = gameData.getCopyGridState();
+            int[][] newGridState = gameData.getCopyOfGridState();
             newGridState[x][y] = input;
 
             gameData = new SudokuGame(
@@ -67,5 +76,3 @@ public class ControlLogic implements IUserInterfaceContract.EventListener {
         }
     }
 }
-
-
